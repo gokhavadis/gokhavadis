@@ -72,3 +72,19 @@ function triggerAlert(message) {
 if (wind_speed > 50) {
     triggerAlert("KRİTİK RÜZGAR HIZI: " + wind_speed + " km/s!");
 }
+
+function refreshData() {
+    const text = document.getElementById('refresh-text');
+    const update = document.getElementById('last-update');
+    
+    text.innerText = "Yenileniyor...";
+    
+    // Simülasyon: 2 saniye sonra "Güncel" yazsın
+    setTimeout(() => {
+        text.innerText = "Sistem Güncel";
+        update.innerText = new Date().toLocaleTimeString();
+    }, 2000);
+}
+
+// Her 60 saniyede bir tetiklensin
+setInterval(refreshData, 60000);
