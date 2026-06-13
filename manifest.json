@@ -1,6 +1,6 @@
 {
-  "name": "Meteo Gözlem",
-  "short_name": "Meteo",
+  "name": "Gök Havadis",
+  "short_name": "Gök Havadis",
   "description": "Gelişmiş Atmosferik Veri ve Radar Sistemi",
   "start_url": "/index.html",
   "display": "standalone",
