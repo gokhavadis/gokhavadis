@@ -10,6 +10,22 @@ self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
 });
 
+function updateCountdown() {
+    // Hedef tarihini buraya yaz (YKS veya istediğin tarih)
+    const targetDate = new Date('2026-06-27T10:00:00').getTime(); 
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('countdown').innerText = `${days} gün ${hours} saat ${minutes} dk ${seconds} sn`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
 self.addEventListener('activate', event => {
   event.waitUntil(caches.keys().then(cacheNames => {
     return Promise.all(cacheNames.map(cache => {
