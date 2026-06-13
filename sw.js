@@ -54,3 +54,21 @@ self.addEventListener('fetch', event => {
     setInterval(updateCountdown, 1000);
     updateCountdown();
 </script>
+function triggerAlert(message) {
+    const toast = document.getElementById('toast-alert');
+    const text = document.getElementById('alert-text');
+    
+    text.innerText = message;
+    toast.style.display = 'block'; // Görünür yap
+    
+    // 5 saniye sonra kendiliğinden kaybolsun
+    setTimeout(() => {
+        toast.style.display = 'none';
+    }, 5000);
+}
+
+// ÖRNEK KULLANIM:
+// Veri geldiğinde (örneğin rüzgar hızı 50 km/s'yi geçerse)
+if (wind_speed > 50) {
+    triggerAlert("KRİTİK RÜZGAR HIZI: " + wind_speed + " km/s!");
+}
