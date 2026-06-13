@@ -9,18 +9,6 @@ const urlsToCache = [
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
 });
-
-function updateCountdown() {
-    // Hedef tarihini buraya yaz (YKS veya istediğin tarih)
-    const targetDate = new Date('2026-06-27T10:00:00').getTime(); 
-    const now = new Date().getTime();
-    const diff = targetDate - now;
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
     document.getElementById('countdown').innerText = `${days} gün ${hours} saat ${minutes} dk ${seconds} sn`;
 }
 setInterval(updateCountdown, 1000);
@@ -37,3 +25,32 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(caches.match(event.request).then(res => res || fetch(event.request)));
 });
+<script>
+    // 1. Canlı Saat
+    function updateClock() {
+        const el = document.getElementById('live-clock');
+        if (el) el.innerText = new Date().toLocaleTimeString('tr-TR');
+    }
+    setInterval(updateClock, 1000);
+
+    // 2. Geri Sayım
+    function updateCountdown() {
+        const targetDate = new Date('2026-06-27T10:00:00').getTime(); // Hedef Tarih
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            document.getElementById('countdown').innerText = "Sınav Günü Geldi!";
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('countdown').innerText = `${days}g ${hours}s ${minutes}d ${seconds}s`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
